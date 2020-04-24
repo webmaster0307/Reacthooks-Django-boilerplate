@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from specialist.models import Category, SubCategory, User
+from specialist.models import Category, SubCategory, User, Enquirery
 
 class CategorySerializer(serializers.ModelSerializer):
 
@@ -20,3 +20,23 @@ class UserSerializer(serializers.ModelSerializer):
     model = User
     fields = ['id', 'email', 'first_name', 'last_name', 'country', 'city', 'role', 'category', 'sub_category', 'password']
     extra_kwargs = {'password': {'write_only': True}}
+
+  def create(self, validated_data):
+    user = User(**validated_data)
+    user.set_password(validated_data['password'])
+    user.save()
+    return user
+
+class SignupSerializer(UserSerializer):
+  
+  class Meta:
+    model=User
+    fields = ['id', 'email', 'first_name', 'last_name', 'country', 'city', 'role', 'category', 'sub_category', 'password']
+    extra_kwargs = {'password': {'write_only': True}}
+
+
+class EnquirerySerializer(serializers.ModelSerializer):
+
+  class Meta:
+    model = Enquirery
+    fields = ['id', 'content']
