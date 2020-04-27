@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import theme from './styles/theme';
+import ContextProvider from "./providers";
+import { ThemeProvider } from '@material-ui/core';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ContextProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
+    </ContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
